@@ -211,80 +211,142 @@ footer{background:var(--ink2);border-top:1px solid rgba(200,196,188,.06);padding
 .r3{opacity:0;transform:translateY(32px);transition:opacity .8s .3s,transform .8s .3s}
 .r3.on{opacity:1;transform:none}
 
-/* RESPONSIVE */
+/* ═══ MOBILE ONLY — DO NOT AFFECT DESKTOP ═══ */
 @media(max-width:1100px){
   .svc-grid,.proc-grid,.why-grid{grid-template-columns:repeat(2,1fr)}
   .ft{grid-template-columns:1fr 1fr}
   .proj-grid{grid-template-columns:repeat(2,1fr)}
 }
+
 @media(max-width:768px){
   /* Nav */
-  .nl{display:none}
-  .hbg{display:flex}
+  .nl{display:none!important}
+  .hbg{display:flex!important}
+  nav{padding:0 5%}
+
+  /* Hero */
+  .hero{min-height:100svh}
+  .hero-c{padding:0 5% 0;padding-top:76px;max-width:100%}
+  .hero-h{font-size:clamp(2.4rem,8vw,3.6rem);letter-spacing:-1px}
+  .hero-p{font-size:.82rem;max-width:100%}
+  .hero-btns{flex-direction:column;align-items:flex-start;gap:10px}
+  .btn{width:100%;text-align:center;padding:16px 20px}
+  .scrollhint{right:3%}
+
   /* Sections */
   section{padding:72px 5%}
+
   /* About */
-  .about{grid-template-columns:1fr;gap:40px}
-  .about-img{aspect-ratio:16/9}
-  /* Nums */
+  .about{grid-template-columns:1fr!important;gap:36px}
+  .about-img{aspect-ratio:4/3;width:100%}
   .nums{grid-template-columns:1fr 1fr}
+  .num-v{font-size:1.8rem}
+
   /* Services */
-  .svc-grid{grid-template-columns:1fr 1fr}
+  .svc-grid{grid-template-columns:1fr 1fr!important}
   .svc-hd{flex-direction:column;align-items:flex-start;gap:16px}
-  /* Process */
-  .proc-grid{grid-template-columns:1fr 1fr}
-  /* Why */
-  .why-hd{grid-template-columns:1fr;gap:24px}
-  .why-grid{grid-template-columns:1fr 1fr}
-  /* Contact */
-  .contact-wrap{grid-template-columns:1fr}
-  .contact-left{padding:64px 5%}
-  .contact-right{height:300px;min-height:300px}
+  .svc-hd .btn{width:auto}
+  .sc{padding:28px 18px 40px}
+
+  /* Full bleed */
+  .fb{height:auto;min-height:420px;padding:80px 0}
+  .fb-c{padding:0 5%;max-width:100%}
+  .fb-c .h2{font-size:clamp(1.7rem,5vw,2.4rem)}
+  .fb-c .btn{width:auto}
+
   /* Gallery */
   .gallery{height:200px}
   .gp:hover{flex:2}
-  /* Full bleed */
-  .fb{height:420px}
-  .fb-c{padding:0 5%}
-  /* Footer */
-  .ft{grid-template-columns:1fr 1fr;gap:28px}
-  /* Projekte */
-  .proj-grid{grid-template-columns:1fr 1fr}
-  .proj-hero-c{padding-bottom:48px}
-  /* Hero */
-  .hero-h{font-size:clamp(2.4rem,8vw,3.8rem)}
-  .hero-p{font-size:.82rem}
-}
-@media(max-width:480px){
-  section{padding:60px 5%}
-  /* Services & grid — single column on very small screens */
-  .svc-grid{grid-template-columns:1fr}
-  .proc-grid{grid-template-columns:1fr}
-  .why-grid{grid-template-columns:1fr}
-  .proj-grid{grid-template-columns:1fr}
-  /* Hero */
-  .hero-btns{flex-direction:column;align-items:flex-start}
-  .hero-h{font-size:clamp(2rem,9vw,3rem);letter-spacing:-1px}
-  .scrollhint{display:none}
-  /* Footer */
-  .ft{grid-template-columns:1fr}
-  .ftb{flex-direction:column;text-align:center}
-  .soc{justify-content:center}
+  .gp-lbl{opacity:1;font-size:.55rem}
+
+  /* Process */
+  .proc-grid{grid-template-columns:1fr 1fr!important}
+  .pr{padding:32px 20px}
+  .pr-n{font-size:3rem}
+
+  /* Why */
+  .why-hd{grid-template-columns:1fr!important;gap:20px;margin-bottom:40px}
+  .why-grid{grid-template-columns:1fr 1fr!important}
+  .wi{padding:32px 22px}
+
   /* Contact */
-  .contact-right{height:240px}
-  /* Gallery — vertical stack */
-  .gallery{height:auto;flex-direction:column}
-  .gp{flex:none;height:180px}
-  .gp:hover{flex:none}
-  .gp-lbl{opacity:1}
-  /* Full bleed */
-  .fb{height:480px}
-  .fb-c .h2{font-size:1.8rem}
-  /* Nav CTA hide on very small */
-  .nl .cta{display:none}
-  /* Proj filters wrap nicely */
-  .proj-filters{gap:6px;padding:28px 5% 0}
+  .contact-wrap{grid-template-columns:1fr!important}
+  .contact-left{padding:64px 5%}
+  .contact-right{height:280px;min-height:280px}
+  .ci{padding:16px 18px;gap:14px}
+  .ci-ic{width:36px;height:36px;font-size:.85rem}
+  .ci-v{font-size:.8rem}
+
+  /* Footer */
+  .ft{grid-template-columns:1fr 1fr!important;gap:28px}
+  .ftb{flex-wrap:wrap;gap:10px}
+
+  /* Projekte */
+  .proj-hero{height:45vh;min-height:320px}
+  .proj-hero-c{padding:0 5% 48px}
+  .proj-grid{grid-template-columns:1fr 1fr!important}
+  .proj-filters{padding:28px 5% 0;gap:6px}
   .pf{padding:8px 14px;font-size:.58rem}
+  .proj-cta{padding:60px 5%}
+}
+
+@media(max-width:480px){
+  /* Hero */
+  .hero-h{font-size:clamp(2rem,9vw,2.6rem)}
+  .hero-tag{font-size:.55rem;letter-spacing:4px}
+  .scrollhint{display:none}
+  .dots{bottom:24px}
+
+  /* Sections */
+  section{padding:56px 5%}
+  .lbl{font-size:.54rem;letter-spacing:4px}
+  .h2{font-size:clamp(1.7rem,7vw,2.2rem)}
+
+  /* Services — single col on tiny screens */
+  .svc-grid{grid-template-columns:1fr!important}
+  .sc{padding:28px 22px 44px}
+
+  /* Process — single col */
+  .proc-grid{grid-template-columns:1fr!important}
+
+  /* Why — single col */
+  .why-grid{grid-template-columns:1fr!important}
+
+  /* Gallery — vertical */
+  .gallery{height:auto;flex-direction:column;gap:2px}
+  .gp{flex:none!important;height:160px;width:100%}
+  .gp:hover{flex:none!important}
+  .gp-lbl{opacity:1}
+
+  /* Full bleed */
+  .fb-bg{background-position:60% center}
+  .fb-c .h2{font-size:1.6rem}
+
+  /* About image taller on small */
+  .about-img{aspect-ratio:3/2}
+
+  /* Nums 2 col stays fine */
+  .nums{grid-template-columns:1fr 1fr}
+  .num{padding:18px 14px}
+  .num-v{font-size:1.6rem}
+
+  /* Contact */
+  .contact-right{height:220px}
+  .ci-stack{gap:1px}
+
+  /* Footer single col */
+  .ft{grid-template-columns:1fr!important;gap:32px}
+  .ftb{flex-direction:column;text-align:center;align-items:center}
+  .soc{justify-content:center}
+
+  /* Projekte */
+  .proj-hero{height:40vh;min-height:280px}
+  .proj-grid{grid-template-columns:1fr!important}
+  .pj-info{padding:18px 16px 22px}
+  .proj-cta{padding:52px 5%}
+
+  /* Mobile nav items bigger tap targets */
+  .mob a{padding:18px 0;font-size:.72rem}
 }
 </style>
 </head>
@@ -513,7 +575,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(200,196,188,.06);padding
 <!-- FOOTER -->
 <footer>
   <div class="ft">
-    <div><div class="ft-logo"><img src="Logox.png" alt="Metall-X"></div>
+    <div><div class="ft-logo"><img src="logo.png" alt="Metall-X"></div>
       <p class="ft-tag">Ihr Spezialist für hochwertige Geländer,<br>Sonnenstoren und Senkrechtmarkisen.<br><br>Musterstrasse 12, 3000 Bern<br>info@metallx.ch · www.metallx.ch</p>
     </div>
     <div class="fc"><p class="fc-t">Leistungen</p>
@@ -622,7 +684,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(200,196,188,.06);padding
   </div>
   <footer>
     <div class="ft">
-      <div><div class="ft-logo"><img src="Logox.png" alt="Metall-X"></div>
+      <div><div class="ft-logo"><img src="logo.png" alt="Metall-X"></div>
         <p class="ft-tag">Ihr Spezialist für hochwertige Geländer,<br>Sonnenstoren und Senkrechtmarkisen.<br><br>Musterstrasse 12, 3000 Bern<br>info@metallx.ch</p>
       </div>
       <div class="fc"><p class="fc-t">Leistungen</p>
