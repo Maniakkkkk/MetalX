@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metall-X – Präzision und Design in Metall</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#0c0d0b;--ink2:#151714;--ink3:#1c1e1a;--steel:#c8c4bc;--dim:#6e7269;--accent:#9aab94;--white:#f5f2ed}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--ink);color:var(--steel);overflow-x:hidden}
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;transition:background .5s}
+nav.s{background:rgba(12,13,11,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{cursor:pointer}
+.logo img{height:34px;display:block}
+.nl{display:flex;gap:2.2rem;list-style:none;align-items:center}
+.nl a{color:#fff;font-size:.67rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:opacity .3s;cursor:pointer;opacity:.75}
+.nl a:hover,.nl a.active{opacity:1}
+.nl .cta{border:1px solid rgba(255,255,255,.3);padding:9px 22px;opacity:1!important;transition:all .3s!important}
+.nl .cta:hover{background:#fff!important;color:var(--ink)!important}
+.dd{position:relative}
+.ddm{display:none;position:absolute;top:calc(100% + 18px);left:0;background:rgba(12,13,11,.98);border:1px solid rgba(255,255,255,.08);min-width:240px;padding:6px 0}
+.dd:hover .ddm{display:block}
+.ddm li{list-style:none}
+.ddm a{display:block;padding:10px 18px;font-size:.67rem;color:rgba(255,255,255,.5)!important;letter-spacing:1px;text-transform:uppercase;transition:all .25s;cursor:pointer;opacity:1!important}
+.ddm a:hover{color:#fff!important;padding-left:26px}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hbg span{width:22px;height:1.5px;background:#fff;transition:.3s}
+.hbg.o span:first-child{transform:rotate(45deg) translate(4px,4px)}
+.hbg.o span:nth-child(2){opacity:0}
+.hbg.o span:last-child{transform:rotate(-45deg) translate(4px,-4px)}
+.mob{display:none;position:fixed;inset:76px 0 0;background:var(--ink);z-index:99;padding:28px 6%;overflow-y:auto}
+.mob.o{display:block}
+.mob a{display:block;padding:15px 0;color:#fff;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.05);transition:opacity .3s;cursor:pointer;opacity:.6}
+.mob a:hover{opacity:1}
+.ms{padding-left:18px!important;font-size:.66rem!important;opacity:.3!important}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:720px;display:flex;align-items:center;overflow:hidden}
+.hero-slides{position:absolute;inset:0}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease;background-size:cover;background-position:center}
+.slide.a{opacity:1}
+.slide:nth-child(1){background-image:url('9fa5b5e0c75b1dafb2b856414a0bd011.jpg')}
+.slide:nth-child(2){background-image:url('d254f754c316044ec2ce180fdd1f119b.jpg')}
+.slide:nth-child(3){background-image:url('7c732c22767e7bada28b6a1b223e365b.jpg')}
+.hero-dim{position:absolute;inset:0;background:linear-gradient(105deg,rgba(12,13,11,.9) 0%,rgba(12,13,11,.55) 55%,rgba(12,13,11,.3) 100%)}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,13,11,1) 0%,transparent 50%)}
+.hero-c{position:relative;z-index:2;padding:0 6%;max-width:780px;padding-top:76px}
+.hero-tag{font-size:.6rem;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;opacity:0;transform:translateY(20px);animation:up .9s .3s forwards}
+.hero-h{font-size:clamp(3rem,6.5vw,5.8rem);font-weight:200;color:var(--white);line-height:1.03;letter-spacing:-2px;margin-bottom:28px;opacity:0;transform:translateY(24px);animation:up .9s .5s forwards}
+.hero-h strong{font-weight:900;display:block}
+.hero-p{font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.9;max-width:460px;margin-bottom:44px;font-weight:300;opacity:0;transform:translateY(20px);animation:up .9s .7s forwards}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;transform:translateY(20px);animation:up .9s .9s forwards}
+.dots{position:absolute;bottom:36px;left:6%;z-index:2;display:flex;gap:10px;opacity:0;animation:fi 1s 1.2s forwards}
+.dot{width:20px;height:1.5px;background:rgba(255,255,255,.2);cursor:pointer;transition:all .4s}
+.dot.a{background:#fff;width:36px}
+.scrollhint{position:absolute;right:5%;bottom:36px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fi 1s 1.4s forwards}
+.scrollhint span{font-size:.55rem;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.3);writing-mode:vertical-rl}
+.sbar{width:1px;height:52px;background:linear-gradient(var(--accent),transparent);animation:sba 2s 1.4s infinite}
+@keyframes sba{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes up{to{opacity:1;transform:none}}
+@keyframes fi{to{opacity:1}}
+
+/* HERO DECO */
+.hero-deco{position:absolute;right:6%;top:0;bottom:0;z-index:3;width:230px;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding-top:96px;padding-bottom:60px;opacity:0;animation:fi 1.2s 1.1s forwards}
+.hd-inner{position:relative;display:flex;align-items:flex-end;height:440px;gap:14px}
+.hd-b{flex:1;min-width:0;height:var(--h);position:relative;overflow:hidden;background:linear-gradient(to top,rgba(200,196,188,.52),rgba(200,196,188,.26) 40%,rgba(200,196,188,.08) 72%,transparent);border-top:1.5px solid rgba(200,196,188,.42);animation:hdGrow .9s var(--d) cubic-bezier(.4,0,.2,1) both}
+.hd-b::after{content:'';position:absolute;left:0;right:0;height:55%;top:-55%;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);animation:hdShimmer 5s ease-in-out infinite;animation-delay:var(--d)}
+.hd-rail{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(200,196,188,.5) 18%,rgba(200,196,188,.38) 82%,transparent)}
+.hd-scan{position:absolute;left:0;right:0;height:110px;top:-110px;background:linear-gradient(to bottom,transparent,rgba(154,171,148,.09),transparent);animation:hdScan 7s ease-in-out infinite}
+.hd-node{position:absolute;width:5px;height:5px;background:var(--accent);border-radius:50%;box-shadow:0 0 6px var(--accent);transform:translateY(50%);animation:hdNodePulse 3s ease-in-out infinite}
+.hd-label{margin-top:22px;font-size:.47rem;letter-spacing:5px;text-transform:uppercase;color:rgba(154,171,148,.28);text-align:center}
+@keyframes hdGrow{from{transform:scaleY(0);transform-origin:bottom;opacity:0}to{transform:scaleY(1);opacity:1}}
+@keyframes hdShimmer{0%{top:-55%;opacity:0}18%{opacity:.85}80%{opacity:.35}100%{top:110%;opacity:0}}
+@keyframes hdScan{0%{top:-110px}80%{opacity:1}100%{top:440px;opacity:0}}
+@keyframes hdNodePulse{0%,100%{opacity:.32;box-shadow:0 0 4px var(--accent)}50%{opacity:.88;box-shadow:0 0 10px var(--accent),0 0 22px rgba(154,171,148,.38)}}
+@media(max-width:900px){
+  .hero-deco{right:0;left:0;width:100%;bottom:64px;top:auto;padding:0;flex-direction:row;align-items:flex-end;height:90px}
+  .hd-inner{width:100%;height:90px;gap:5px;padding:0 5%}
+  .hd-rail,.hd-node,.hd-label{display:none}
+}
+
+/* SHARED */
+section{padding:120px 6%}
+.lbl{font-size:.58rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.h2{font-size:clamp(2rem,3.8vw,3.2rem);font-weight:200;color:var(--white);line-height:1.1;letter-spacing:-1px}
+.h2 b{font-weight:900}
+.btn{display:inline-block;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:.67rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:15px 34px;cursor:pointer;transition:all .35s;border:none}
+.btn-w{background:var(--steel);color:var(--ink)}
+.btn-w:hover{background:var(--white);transform:translateY(-2px)}
+.btn-o{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff}
+.btn-o:hover{border-color:#fff;transform:translateY(-2px)}
+
+/* ABOUT */
+.about{background:var(--ink);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-txt p{margin-top:28px;font-size:.87rem;line-height:2;color:var(--dim);font-weight:300}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:48px;background:rgba(200,196,188,.06)}
+.num{background:var(--ink);padding:26px 20px}
+.num-v{font-size:2.4rem;font-weight:900;color:var(--steel);letter-spacing:-2px}
+.num-l{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-top:6px}
+.about-img{position:relative;overflow:hidden;aspect-ratio:3/4}
+.about-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.9);transition:transform .8s}
+.about-img:hover img{transform:scale(1.05)}
+.about-img-cap{position:absolute;bottom:0;left:0;right:0;padding:32px 24px 24px;background:linear-gradient(transparent,rgba(12,13,11,.9));font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim)}
+
+/* SERVICES */
+.services{background:var(--ink2)}
+.svc-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:20px}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,196,188,.06)}
+.sc{background:var(--ink2);padding:36px 26px 48px;position:relative;overflow:hidden;transition:background .4s}
+.sc::before{content:'';position:absolute;bottom:0;left:0;width:2px;height:0;background:var(--accent);transition:height .5s}
+.sc:hover{background:var(--ink3)}
+.sc:hover::before{height:100%}
+.sc-icon{font-size:1.4rem;color:var(--accent);margin-bottom:18px;opacity:.85;display:block}
+.sc-n{font-size:.55rem;letter-spacing:3px;color:var(--accent);margin-bottom:10px;opacity:.6}
+.sc-t{font-size:.87rem;font-weight:700;color:var(--steel);line-height:1.5;margin-bottom:10px}
+.sc-d{font-size:.73rem;color:var(--dim);line-height:1.9;font-weight:300}
+.sc-arr{position:absolute;bottom:22px;right:22px;font-size:.78rem;color:var(--accent);opacity:0;transform:translateX(-6px);transition:all .4s}
+.sc:hover .sc-arr{opacity:1;transform:none}
+
+/* FULL BLEED */
+.fb{position:relative;height:520px;display:flex;align-items:center;overflow:hidden}
+.fb-bg{position:absolute;inset:0;background:url('https://sansande.com/wp-content/uploads/2025/04/09-1-1.png') center/cover;filter:brightness(.28) contrast(1.1)}
+.fb-grad{position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,13,11,.95) 0%,rgba(12,13,11,.3) 100%)}
+.fb-c{position:relative;z-index:2;padding:0 8%;max-width:680px}
+.fb-c .lbl{margin-bottom:20px}
+.fb-c .h2{margin-bottom:28px}
+.fb-c p{font-size:.88rem;color:var(--dim);line-height:1.9;margin-bottom:40px;font-weight:300}
+
+/* SHOWCASE */
+.showcase{background:var(--ink);padding:88px 0 0;overflow:hidden}
+.showcase-header{padding:0 6% 44px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
+.sc-statbox{display:flex;align-items:center;gap:0}
+.sc-stat-n{font-size:3.2rem;font-weight:900;color:var(--white);letter-spacing:-3px;line-height:1;padding-right:20px}
+.sc-stat-sep{width:1px;height:52px;background:rgba(200,196,188,.12);flex-shrink:0}
+.sc-stat-meta{display:flex;flex-direction:column;gap:5px;padding-left:20px}
+.sc-stat-meta-a{font-size:.52rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:700}
+.sc-stat-meta-b{font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim)}
+.sc-ticker{overflow:hidden;border-top:1px solid rgba(200,196,188,.07);border-bottom:1px solid rgba(200,196,188,.07);padding:11px 0;margin-bottom:2px}
+.sc-track{display:flex;width:max-content;animation:scTick 30s linear infinite}
+.sc-track:hover{animation-play-state:paused}
+.sc-item{display:inline-flex;align-items:center;gap:9px;padding:0 28px;font-size:.5rem;font-weight:600;letter-spacing:3.5px;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.sc-item i{color:var(--accent);opacity:.7;font-size:.58rem}
+.sc-dot{width:3px;height:3px;background:rgba(154,171,148,.28);border-radius:50%;flex-shrink:0;align-self:center}
+@keyframes scTick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.cards-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(200,196,188,.06)}
+.sc2{background:var(--ink2);cursor:pointer;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.sc2:hover{transform:translateY(-5px);z-index:2}
+.sc2::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--accent);z-index:3;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.sc2:hover::before{width:100%}
+.sc2-img{overflow:hidden;height:220px;flex-shrink:0}
+.sc2-img img{width:100%;height:100%;object-fit:cover;image-rendering:high-quality;filter:brightness(.95) saturate(1.06) contrast(1.08);transition:transform .8s ease,filter .6s}
+.sc2:hover .sc2-img img{transform:scale(1.06);filter:brightness(1) saturate(1.1) contrast(1.08)}
+.sc2-info{padding:18px 20px 22px;border-top:1px solid rgba(200,196,188,.06);transition:background .3s;flex:1}
+.sc2:hover .sc2-info{background:var(--ink3)}
+.sc2-icon{font-size:.85rem;color:var(--accent);margin-bottom:9px;display:block;opacity:.75;transition:transform .35s,opacity .35s}
+.sc2:hover .sc2-icon{opacity:1;transform:scale(1.15)}
+.sc2-cat{font-size:.48rem;letter-spacing:3.5px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px;opacity:.65}
+.sc2-title{font-size:.82rem;font-weight:700;color:var(--steel);line-height:1.35;transition:color .3s}
+.sc2:hover .sc2-title{color:var(--white)}
+.sc2-cta{grid-column:1/-1;background:var(--ink3);cursor:default;display:flex;align-items:center;justify-content:space-between;padding:44px 52px;position:relative;overflow:hidden;gap:40px;flex-wrap:wrap}
+.sc2-cta:hover{transform:none}
+.sc2-cta::before{display:none}
+.sc2-cta::after{content:'150+';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-size:9rem;font-weight:900;color:rgba(200,196,188,.04);pointer-events:none;line-height:1;letter-spacing:-6px}
+.cta2-left{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.cta2-iconwrap{width:52px;height:52px;border:1px solid rgba(154,171,148,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .4s}
+.sc2-cta:hover .cta2-iconwrap{border-color:rgba(154,171,148,.45);background:rgba(154,171,148,.06)}
+.cta2-iconwrap i{font-size:1.15rem;color:var(--accent)}
+.cta2-text .cta2-num{font-size:3rem;font-weight:900;color:var(--white);letter-spacing:-2px;line-height:1;margin-bottom:2px}
+.cta2-text .cta2-label{font-size:.5rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent)}
+.cta2-features{display:flex;gap:24px;flex-wrap:wrap}
+.cta2-feat{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--dim);font-weight:300}
+.cta2-feat i{color:var(--accent);font-size:.55rem}
+.cta2-right{position:relative;z-index:1}
+@media(max-width:1100px){.cards-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.cards-strip{grid-template-columns:repeat(2,1fr)}.sc2-cta{padding:32px 28px;flex-direction:column;align-items:flex-start;gap:24px}.cta2-features{flex-direction:column;gap:12px}.showcase-header{padding:0 5% 36px}.sc-statbox{flex-wrap:wrap;gap:12px}.sc-stat-sep{display:none}.sc-stat-meta{padding-left:0}}
+@media(max-width:420px){.cards-strip{grid-template-columns:1fr}}
+
+/* PROCESS */
+.process{background:var(--ink)}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,196,188,.06);margin-top:64px}
+.pr{background:var(--ink);padding:44px 28px;position:relative}
+.pr::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:rgba(200,196,188,.06);transition:background .4s}
+.pr:hover::after{background:var(--accent)}
+.pr-n{font-size:4rem;font-weight:900;color:rgba(200,196,188,.05);line-height:1;margin-bottom:24px;transition:color .4s}
+.pr:hover .pr-n{color:rgba(200,196,188,.1)}
+.pr-icon{font-size:1.2rem;color:var(--accent);margin-bottom:16px;display:block;opacity:.8}
+.pr-t{font-size:.82rem;font-weight:700;color:var(--steel);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.pr-d{font-size:.74rem;color:var(--dim);line-height:1.9;font-weight:300}
+
+/* WHY */
+.why{background:var(--ink2)}
+.why-hd{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:60px}
+.why-hd p{font-size:.88rem;color:var(--dim);line-height:1.9;font-weight:300}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,196,188,.06)}
+.wi{background:var(--ink2);padding:44px 28px;position:relative;overflow:hidden;transition:background .4s}
+.wi::before{content:'';position:absolute;top:0;left:0;width:0;height:1.5px;background:var(--accent);transition:width .5s}
+.wi:hover{background:var(--ink3)}
+.wi:hover::before{width:100%}
+.wi-i{font-size:1.5rem;color:var(--accent);margin-bottom:18px;opacity:.8}
+.wi-t{font-size:.78rem;font-weight:700;color:var(--steel);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.wi-d{font-size:.74rem;color:var(--dim);line-height:1.9;font-weight:300}
+
+/* CONTACT */
+.contact{background:var(--ink);padding:0!important}
+.contact-top{padding:100px 6% 0;text-align:center}
+.contact-top .h2{margin-top:14px}
+.contact-top>p{font-size:.87rem;color:var(--dim);line-height:1.9;font-weight:300;margin-top:18px;max-width:500px;margin-left:auto;margin-right:auto}
+.cinfo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(200,196,188,.06);margin-top:72px}
+.cinfo{background:var(--ink);padding:56px 36px 60px;position:relative;overflow:hidden;transition:background .5s;cursor:default}
+.cinfo::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--accent);transition:width .6s}
+.cinfo::after{content:'';position:absolute;bottom:0;left:36px;width:0;height:1px;background:rgba(154,171,148,.18);transition:width .6s}
+.cinfo:hover{background:var(--ink2)}
+.cinfo:hover::before{width:100%}
+.cinfo:hover::after{width:calc(100% - 72px)}
+.cinfo-num{font-size:5rem;font-weight:900;color:rgba(200,196,188,.035);line-height:1;position:absolute;top:14px;right:20px;pointer-events:none;letter-spacing:-4px;font-variant-numeric:tabular-nums}
+.cinfo-icon{width:54px;height:54px;border:1px solid rgba(154,171,148,.18);display:flex;align-items:center;justify-content:center;font-size:1.15rem;color:var(--accent);margin-bottom:32px;transition:border-color .4s,background .4s}
+.cinfo:hover .cinfo-icon{border-color:rgba(154,171,148,.45);background:rgba(154,171,148,.06)}
+.cinfo-lbl{font-size:.5rem;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;opacity:.6}
+.cinfo-val{font-size:.97rem;font-weight:300;color:var(--steel);line-height:1.75;letter-spacing:-.2px}
+.cinfo-sub{font-size:.72rem;color:var(--dim);margin-top:14px;line-height:1.95;font-weight:300;border-top:1px solid rgba(200,196,188,.05);padding-top:14px}
+.contact-map{position:relative;height:420px;overflow:hidden;margin-top:1px}
+.contact-map iframe{width:100%;height:100%;border:none;display:block;filter:grayscale(1) brightness(.28) contrast(1.2) sepia(.08)}
+.contact-map-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,13,11,.75) 0%,rgba(12,13,11,.05) 40%,rgba(12,13,11,.55) 100%);pointer-events:none}
+.contact-bar{display:flex;align-items:center;justify-content:space-between;padding:48px 6%;background:var(--ink2);border-top:1px solid rgba(200,196,188,.06);flex-wrap:wrap;gap:20px}
+.contact-bar p{font-size:.82rem;color:var(--dim);font-weight:300;line-height:1.8;max-width:480px}
+
+/* FOOTER */
+footer{background:var(--ink2);border-top:1px solid rgba(200,196,188,.06);padding:72px 6% 28px}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
+.ft-logo img{height:26px;margin-bottom:18px}
+.ft-tag{font-size:.72rem;color:var(--dim);line-height:2;font-weight:300}
+.fc-t{font-size:.55rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+.fc a{display:block;font-size:.73rem;color:var(--dim);text-decoration:none;padding:5px 0;transition:color .3s,padding-left .3s;cursor:pointer}
+.fc a:hover{color:var(--steel);padding-left:6px}
+.ftb{border-top:1px solid rgba(200,196,188,.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.ftb p{font-size:.6rem;color:rgba(200,196,188,.2);letter-spacing:1px}
+.soc{display:flex;gap:8px}
+.so{width:34px;height:34px;border:1px solid rgba(200,196,188,.1);display:flex;align-items:center;justify-content:center;color:var(--dim);text-decoration:none;font-size:.72rem;transition:all .3s}
+.so:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+/* PROJEKTE PAGE */
+.proj-hero{position:relative;height:60vh;min-height:420px;display:flex;align-items:flex-end;overflow:hidden}
+.proj-hero-bg{position:absolute;inset:0;background:url('https://i.pinimg.com/736x/fb/bb/9d/fbbb9de507a8c241265b28b75bced490--modern-railing-metal-stair-railing.jpg') center/cover;filter:brightness(.3) contrast(1.1)}
+.proj-hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,13,11,1) 0%,transparent 60%)}
+.proj-hero-c{position:relative;z-index:2;padding:0 6% 72px;padding-top:76px}
+.proj-filters{display:flex;gap:8px;flex-wrap:wrap;padding:40px 6% 0;background:var(--ink)}
+.pf{background:transparent;border:1px solid rgba(200,196,188,.15);color:var(--dim);font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 20px;cursor:pointer;transition:all .3s}
+.pf:hover,.pf.a{background:var(--steel);color:var(--ink);border-color:var(--steel)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(200,196,188,.06)}
+.pj{position:relative;overflow:hidden;cursor:pointer;background:var(--ink2)}
+.pj-img{width:100%;aspect-ratio:4/3;overflow:hidden}
+.pj-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.85);transition:transform .7s,filter .7s}
+.pj:hover .pj-img img{transform:scale(1.07);filter:brightness(.9) saturate(1)}
+.pj-info{padding:24px 22px 28px;background:var(--ink2);transition:background .3s}
+.pj:hover .pj-info{background:var(--ink3)}
+.pj-cat{font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.pj-title{font-size:.92rem;font-weight:700;color:var(--steel);margin-bottom:8px;line-height:1.4}
+.pj-loc{font-size:.7rem;color:var(--dim);font-weight:300}
+.pj-arr{position:absolute;top:20px;right:20px;width:36px;height:36px;background:rgba(12,13,11,.7);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--accent);opacity:0;transform:translateY(-6px);transition:all .4s}
+.pj:hover .pj-arr{opacity:1;transform:none}
+.proj-empty{background:var(--ink);display:grid;grid-template-columns:1fr 1fr;min-height:520px;align-items:center;gap:0}
+.pe-deco{display:flex;align-items:flex-end;justify-content:center;gap:12px;height:100%;min-height:520px;padding:80px 5% 80px 8%;background:var(--ink2);border-right:1px solid rgba(200,196,188,.05)}
+.pe-bar{flex:1;max-width:38px;height:var(--h);background:linear-gradient(to top,rgba(200,196,188,.45),rgba(200,196,188,.18) 50%,rgba(200,196,188,.05));border-top:1.5px solid rgba(200,196,188,.35);position:relative;animation:peGrow .9s var(--d) cubic-bezier(.4,0,.2,1) both}
+.pe-bar::after{content:'';position:absolute;left:0;right:0;height:40%;top:-40%;background:linear-gradient(to bottom,rgba(255,255,255,.2),transparent);animation:peShimmer 6s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes peGrow{from{transform:scaleY(0);transform-origin:bottom;opacity:0}to{transform:scaleY(1);opacity:1}}
+@keyframes peShimmer{0%{top:-40%;opacity:0}20%{opacity:.7}100%{top:110%;opacity:0}}
+.pe-content{padding:80px 8%;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.pe-content .lbl{margin-bottom:14px}
+.pe-content .h2{margin-bottom:20px}
+.pe-content p{font-size:.87rem;color:var(--dim);line-height:1.95;font-weight:300;margin-bottom:36px;max-width:420px}
+@media(max-width:768px){.proj-empty{grid-template-columns:1fr}.pe-deco{min-height:160px;padding:40px 6%;gap:7px}.pe-content{padding:56px 6%}}
+
+/* REVEAL */
+.r{opacity:0;transform:translateY(32px);transition:opacity .8s,transform .8s}
+.r.on{opacity:1;transform:none}
+.r2{opacity:0;transform:translateY(32px);transition:opacity .8s .15s,transform .8s .15s}
+.r2.on{opacity:1;transform:none}
+.r3{opacity:0;transform:translateY(32px);transition:opacity .8s .3s,transform .8s .3s}
+.r3.on{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.svc-grid,.proc-grid,.why-grid{grid-template-columns:repeat(2,1fr)}.ft{grid-template-columns:1fr 1fr}.proj-grid{grid-template-columns:repeat(2,1fr)}.cinfo-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .nl{display:none}.hbg{display:flex}
+  section{padding:80px 5%}
+  .about{grid-template-columns:1fr;gap:48px}
+  .why-hd{grid-template-columns:1fr;gap:32px}
+  .svc-grid,.proc-grid,.why-grid{grid-template-columns:1fr}
+  .svc-hd{flex-direction:column;align-items:flex-start}
+  .gallery{height:240px}.gp:hover{flex:2.2}
+  .ft{grid-template-columns:1fr 1fr;gap:28px}
+  .proj-grid{grid-template-columns:1fr}
+  .cinfo-grid{grid-template-columns:1fr}
+  .contact-map{height:280px}
+  .contact-bar{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){.ft{grid-template-columns:1fr}.ftb{flex-direction:column;text-align:center}.hero-btns{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" onclick="showPage('home')"><img src="logo.png" alt="Metall-X"></a>
+  <ul class="nl">
+    <li><a onclick="showPage('home');sTo('#about')">Über uns</a></li>
+    <li class="dd">
+      <a onclick="showPage('home');sTo('#services')">Leistungen ▾</a>
+      <ul class="ddm">
+        <li><a onclick="showPage('home');sTo('#services')">Metallbau nach Maß</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">Geländer & Treppengeländer</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">Balkongeländer</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">Senkrechtmarkisen</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">Terrassen- & Balkonlösungen</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">Fassadendesign</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">Montage & Installation</a></li>
+        <li><a onclick="showPage('home');sTo('#services')">3D-Visualisierung</a></li>
+      </ul>
+    </li>
+    <li><a onclick="showPage('projekte')" id="nav-proj">Projekte</a></li>
+    <li><a onclick="showPage('home');sTo('#why')">Qualität</a></li>
+    <li><a onclick="showPage('home');sTo('#contact')">Kontakt</a></li>
+    <li><a onclick="showPage('home');sTo('#contact')" class="cta">Projekt starten</a></li>
+  </ul>
+  <div class="hbg" id="hbg" onclick="tNav()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mob" id="mob">
+  <a onclick="showPage('home');sTo('#about');cNav()">Über uns</a>
+  <a onclick="showPage('home');sTo('#services');cNav()">Leistungen</a>
+  <a onclick="showPage('home');sTo('#services');cNav()" class="ms">→ Geländer</a>
+  <a onclick="showPage('home');sTo('#services');cNav()" class="ms">→ Balkongeländer</a>
+  <a onclick="showPage('home');sTo('#services');cNav()" class="ms">→ Markisen</a>
+  <a onclick="showPage('projekte');cNav()">Projekte</a>
+  <a onclick="showPage('home');sTo('#why');cNav()">Qualität</a>
+  <a onclick="showPage('home');sTo('#contact');cNav()">Kontakt</a>
+</div>
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div class="page active" id="page-home">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-slides" id="slides">
+    <div class="slide a"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+  </div>
+  <div class="hero-dim"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-deco" aria-hidden="true">
+    <div class="hd-inner">
+      <div class="hd-b" style="--h:68%;--d:.3s"></div>
+      <div class="hd-b" style="--h:52%;--d:.42s"></div>
+      <div class="hd-b" style="--h:84%;--d:.54s"></div>
+      <div class="hd-b" style="--h:60%;--d:.66s"></div>
+      <div class="hd-b" style="--h:92%;--d:.78s"></div>
+      <div class="hd-b" style="--h:46%;--d:.9s"></div>
+      <div class="hd-b" style="--h:76%;--d:1.02s"></div>
+      <div class="hd-b" style="--h:58%;--d:1.14s"></div>
+      <div class="hd-b" style="--h:88%;--d:1.26s"></div>
+      <div class="hd-b" style="--h:64%;--d:1.38s"></div>
+      <div class="hd-rail" style="bottom:38%"></div>
+      <div class="hd-rail" style="bottom:64%"></div>
+      <div class="hd-scan"></div>
+      <div class="hd-node" style="left:-2px;bottom:38%"></div>
+      <div class="hd-node" style="left:-2px;bottom:64%"></div>
+      <div class="hd-node" style="right:-2px;bottom:38%"></div>
+      <div class="hd-node" style="right:-2px;bottom:64%"></div>
+    </div>
+    <div class="hd-label">Edelstahl · Aluminium</div>
+  </div>
+  <div class="hero-c">
+    <p class="hero-tag">Schweizweit · Edelstahl · Aluminium</p>
+    <h1 class="hero-h">Präzision<strong>und Design<br>in Metall</strong></h1>
+    <p class="hero-p">Vom maßgeschneiderten Geländer bis zur modernen Metallfassade — wir realisieren Ihre Vision mit höchster Handwerkskunst.</p>
+    <div class="hero-btns">
+      <button class="btn btn-w" onclick="sTo('#contact')">Projekt starten</button>
+      <button class="btn btn-o" onclick="showPage('projekte')">Unsere Projekte</button>
+    </div>
+  </div>
+  <div class="dots" id="dots">
+    <div class="dot a" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="r">
+    <p class="lbl">Über Metall-X</p>
+    <h2 class="h2">Wir vereinen <b>Ingenieurskunst</b> mit anspruchsvollem Design</h2>
+    <p style="margin-top:28px;font-size:.88rem;line-height:2;color:var(--dim);font-weight:300">Bei Metall-X transformieren wir Räume mit maßgeschneiderten Metallelementen, die Schönheit und Funktionalität perfekt vereinen. Vom ersten Entwurf bis zur finalen Montage sind wir Ihr zuverlässiger Partner – schweizweit.</p>
+    <div class="nums">
+      <div class="num"><div class="num-v">15+</div><div class="num-l">Jahre Erfahrung</div></div>
+      <div class="num"><div class="num-v">500+</div><div class="num-l">Projekte realisiert</div></div>
+      <div class="num"><div class="num-v">CH</div><div class="num-l">Schweizweit tätig</div></div>
+      <div class="num"><div class="num-v">100%</div><div class="num-l">Maßgeschneidert</div></div>
+    </div>
+    <div style="margin-top:36px"><button class="btn btn-o" onclick="showPage('projekte')">Unsere Projekte ansehen →</button></div>
+  </div>
+  <div class="about-img r2">
+    <img src="https://sansande.com/wp-content/uploads/2025/04/09-1-1.png" alt="Metall-X Projekt">
+    <div class="about-img-cap">Edelstahl · Aluminium · Schweiz</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="svc-hd r">
+    <div><p class="lbl">Dienstleistungen</p><h2 class="h2">Was wir <b>anbieten</b></h2></div>
+    <button class="btn btn-o" onclick="sTo('#contact')">Beratung anfragen</button>
+  </div>
+  <div class="svc-grid">
+    <div class="sc r">
+      <i class="fa-solid fa-ruler-combined sc-icon"></i>
+      <div class="sc-n">01</div><div class="sc-t">Metallbau nach Maß</div>
+      <div class="sc-d">Maßgeschneiderte Tore, Geländer und Baulösungen – präzise auf Ihre Anforderungen abgestimmt.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r2">
+      <i class="fa-solid fa-stairs sc-icon"></i>
+      <div class="sc-n">02</div><div class="sc-t">Geländer & Treppengeländer</div>
+      <div class="sc-d">Hochwertige Handläufe aus Edelstahl und Aluminium – modern, minimalistisch oder klassisch.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r3">
+      <i class="fa-solid fa-building sc-icon"></i>
+      <div class="sc-n">03</div><div class="sc-t">Balkongeländer Edelstahl/Alu</div>
+      <div class="sc-d">Ästhetische Eleganz kombiniert mit maximaler Sicherheit – langlebig und stilsicher.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r">
+      <i class="fa-solid fa-sun sc-icon"></i>
+      <div class="sc-n">04</div><div class="sc-t">Senkrechtmarkisen</div>
+      <div class="sc-d">Erstklassiger Sonnenschutz für Terrasse, Balkon oder Fassade – komfortabel und modern.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r2">
+      <i class="fa-solid fa-table-cells-large sc-icon"></i>
+      <div class="sc-n">05</div><div class="sc-t">Terrassen- & Balkonlösungen</div>
+      <div class="sc-d">Elegante, maßgeschneiderte Metalllösungen für Außenbereiche – stilvoll und widerstandsfähig.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r3">
+      <i class="fa-solid fa-layer-group sc-icon"></i>
+      <div class="sc-n">06</div><div class="sc-t">Modernes Fassadendesign</div>
+      <div class="sc-d">Futuristische oder industrielle Metallfassaden, die den Charakter Ihres Gebäudes unterstreichen.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r">
+      <i class="fa-solid fa-screwdriver-wrench sc-icon"></i>
+      <div class="sc-n">07</div><div class="sc-t">Montage & Installation CH-weit</div>
+      <div class="sc-d">Qualifizierte Techniker garantieren reibungslose Installation mit höchster Präzision schweizweit.</div><span class="sc-arr">→</span>
+    </div>
+    <div class="sc r2">
+      <i class="fa-solid fa-cube sc-icon"></i>
+      <div class="sc-n">08</div><div class="sc-t">Beratung & 3D-Visualisierung</div>
+      <div class="sc-d">Umfassende Beratung, präzise Planung und realistische 3D-Visualisierungen für Ihr Projekt.</div><span class="sc-arr">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- FULL BLEED -->
+<div class="fb">
+  <div class="fb-bg"></div>
+  <div class="fb-grad"></div>
+  <div class="fb-c r">
+    <p class="lbl">Ihr nächstes Projekt</p>
+    <h2 class="h2">Bereit, Ihre <b>Vision</b> zu realisieren?</h2>
+    <p>Vom ersten Gespräch bis zur fertigen Installation begleiten wir Sie bei jedem Schritt. Kontaktieren Sie uns für eine unverbindliche Beratung.</p>
+    <button class="btn btn-w" onclick="sTo('#contact')">Jetzt Kontakt aufnehmen</button>
+  </div>
+</div>
+
+<!-- SHOWCASE -->
+<section class="showcase">
+  <div class="showcase-header r">
+    <div>
+      <p class="lbl">Referenzen</p>
+      <h2 class="h2">Unsere <b>Designs</b></h2>
+    </div>
+    <div class="sc-statbox">
+      <span class="sc-stat-n" id="designCount">0+</span>
+      <div class="sc-stat-sep"></div>
+      <div class="sc-stat-meta">
+        <span class="sc-stat-meta-a">Verfügbare Designs</span>
+        <span class="sc-stat-meta-b">Maßgefertigte Einzelstücke</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sc-ticker">
+    <div class="sc-track">
+      <span class="sc-item"><i class="fa-solid fa-layer-group"></i>150+ Designs</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-gem"></i>Edelstahl &amp; Aluminium</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-pen-ruler"></i>Individuelles Design</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-location-dot"></i>Schweizweit</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-star"></i>15+ Jahre Erfahrung</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-shield-halved"></i>Qualitätsgarantie</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-cube"></i>3D-Visualisierung</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-screwdriver-wrench"></i>Montage inklusive</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-layer-group"></i>150+ Designs</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-gem"></i>Edelstahl &amp; Aluminium</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-pen-ruler"></i>Individuelles Design</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-location-dot"></i>Schweizweit</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-star"></i>15+ Jahre Erfahrung</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-shield-halved"></i>Qualitätsgarantie</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-cube"></i>3D-Visualisierung</span><span class="sc-dot"></span>
+      <span class="sc-item"><i class="fa-solid fa-screwdriver-wrench"></i>Montage inklusive</span><span class="sc-dot"></span>
+    </div>
+  </div>
+
+  <div class="cards-strip">
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="d8d635ea5db9b570b8cb6cd33dccd8d3.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-ruler-combined sc2-icon"></i>
+        <span class="sc2-cat">Treppengeländer</span>
+        <h3 class="sc2-title">Geschwungene Edelstahlgeländer</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="c70fd4a7a8b6288f488ff610bc59e743.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-stairs sc2-icon"></i>
+        <span class="sc2-cat">Innengeländer</span>
+        <h3 class="sc2-title">Kunstvolle Bogengeländer</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="7c732c22767e7bada28b6a1b223e365b.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-building sc2-icon"></i>
+        <span class="sc2-cat">Balkongeländer</span>
+        <h3 class="sc2-title">Vertikale Metallgeländer</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="0c3b2c3cf835e8eefdf0e6aa1361ebb8.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-gem sc2-icon"></i>
+        <span class="sc2-cat">Designgeländer</span>
+        <h3 class="sc2-title">Rautengeländer nach Maß</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="9fa5b5e0c75b1dafb2b856414a0bd011.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-sun sc2-icon"></i>
+        <span class="sc2-cat">Sonnenschutz</span>
+        <h3 class="sc2-title">Retraktable Markisen</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="6c05a7d66f18cdc0ebf080de9373a082.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-grip-lines sc2-icon"></i>
+        <span class="sc2-cat">Terrassengeländer</span>
+        <h3 class="sc2-title">Edelstahl-Terrassengeländer</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="d254f754c316044ec2ce180fdd1f119b.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-table-cells-large sc2-icon"></i>
+        <span class="sc2-cat">Terrassenlösungen</span>
+        <h3 class="sc2-title">Ausfahrbare Terrassenmarkisen</h3>
+      </div>
+    </div>
+    <div class="sc2" onclick="showPage('projekte')">
+      <div class="sc2-img"><img src="24603ac6b24cd37881ba1fe4b5e24c1f.jpg" alt=""></div>
+      <div class="sc2-info">
+        <i class="fa-solid fa-sliders sc2-icon"></i>
+        <span class="sc2-cat">Lamellensysteme</span>
+        <h3 class="sc2-title">Aluminium-Lamellensystem</h3>
+      </div>
+    </div>
+    <div class="sc2 sc2-cta">
+      <div class="cta2-left">
+        <div class="cta2-iconwrap"><i class="fa-solid fa-pen-ruler"></i></div>
+        <div class="cta2-text">
+          <div class="cta2-num" id="ctaCount">0+</div>
+          <div class="cta2-label">Verfügbare Designs</div>
+        </div>
+        <div class="cta2-features">
+          <div class="cta2-feat"><i class="fa-solid fa-check"></i>Individuelles Design</div>
+          <div class="cta2-feat"><i class="fa-solid fa-check"></i>Edelstahl &amp; Aluminium</div>
+          <div class="cta2-feat"><i class="fa-solid fa-check"></i>Schweizweit verfügbar</div>
+          <div class="cta2-feat"><i class="fa-solid fa-check"></i>3D-Visualisierung</div>
+        </div>
+      </div>
+      <div class="cta2-right">
+        <button class="btn btn-w" onclick="showPage('projekte')">Alle Projekte ansehen →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="r" style="text-align:center;max-width:540px;margin:0 auto">
+    <p class="lbl">Unser Prozess</p>
+    <h2 class="h2">Vom <b>Entwurf</b> zur Installation</h2>
+  </div>
+  <div class="proc-grid">
+    <div class="pr r"><div class="pr-n">01</div><i class="fa-solid fa-comments pr-icon"></i><div class="pr-t">Beratung</div><div class="pr-d">Wir hören Ihnen zu und verstehen Ihre Anforderungen – persönlich, telefonisch oder virtuell.</div></div>
+    <div class="pr r2"><div class="pr-n">02</div><i class="fa-solid fa-pencil-ruler pr-icon"></i><div class="pr-t">Planung & Design</div><div class="pr-d">Maßgeschneiderte Lösungen mit realistischen 3D-Visualisierungen, bevor die erste Schraube gedreht wird.</div></div>
+    <div class="pr r3"><div class="pr-n">03</div><i class="fa-solid fa-industry pr-icon"></i><div class="pr-t">Fertigung</div><div class="pr-d">Präzise Metallfertigung in höchster Qualität – jedes Element nach Ihren genauen Spezifikationen.</div></div>
+    <div class="pr r"><div class="pr-n">04</div><i class="fa-solid fa-circle-check pr-icon"></i><div class="pr-t">Montage & Übergabe</div><div class="pr-d">Pünktliche, saubere Montage schweizweit – mit höchster Handwerkskunst und vollem Service.</div></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="why-hd">
+    <div class="r"><p class="lbl">Warum Metall-X</p><h2 class="h2">Ihr zuverlässiger <b>Partner</b></h2></div>
+    <p class="r2" style="font-size:.88rem;color:var(--dim);line-height:1.9;font-weight:300">Seit über 15 Jahren realisieren wir anspruchsvolle Metallbauprojekte in der gesamten Schweiz – mit Leidenschaft, Präzision und einem unerschütterlichen Qualitätsanspruch.</p>
+  </div>
+  <div class="why-grid">
+    <div class="wi r"><div class="wi-i"><i class="fa-solid fa-gem"></i></div><div class="wi-t">Individuelle Exzellenz</div><div class="wi-d">Jedes Projekt wird speziell nach Ihren Wünschen gefertigt. Keine Standardlösungen – nur Maßarbeit auf höchstem Niveau.</div></div>
+    <div class="wi r2"><div class="wi-i"><i class="fa-solid fa-lightbulb"></i></div><div class="wi-t">Innovatives Design</div><div class="wi-d">Modernste Designs mit unvergleichlicher Handwerkskunst. Form und Funktion gehen bei uns immer Hand in Hand.</div></div>
+    <div class="wi r3"><div class="wi-i"><i class="fa-solid fa-leaf"></i></div><div class="wi-t">Nachhaltigkeit</div><div class="wi-d">Hochqualitative, nachhaltige Materialien für maximale Langlebigkeit und dauerhafte Wertbeständigkeit.</div></div>
+    <div class="wi r"><div class="wi-i"><i class="fa-solid fa-handshake"></i></div><div class="wi-t">Rundum-Service</div><div class="wi-d">Vom Design bis zur Installation schweizweit – wir begleiten Sie zuverlässig bei jedem Schritt Ihres Projekts.</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-top r">
+    <p class="lbl">Kontakt</p>
+    <h2 class="h2">Nehmen Sie <b>Kontakt</b> auf</h2>
+    <p>Haben Sie ein Projekt? Schreiben Sie uns, rufen Sie an oder besuchen Sie uns — wir freuen uns auf Ihre Anfrage.</p>
+  </div>
+  <div class="cinfo-grid">
+    <div class="cinfo r">
+      <div class="cinfo-num">01</div>
+      <div class="cinfo-icon"><i class="fa-solid fa-envelope"></i></div>
+      <div class="cinfo-lbl">E-Mail</div>
+      <div class="cinfo-val">info@metall-x.ch</div>
+      <div class="cinfo-sub">Wir antworten innerhalb von 24 Stunden auf Ihre Anfrage.</div>
+    </div>
+    <div class="cinfo r2">
+      <div class="cinfo-num">02</div>
+      <div class="cinfo-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="cinfo-lbl">Öffnungszeiten</div>
+      <div class="cinfo-val">Mo – Fr &nbsp;07:30 – 17:30<br>Samstag &nbsp;08:00 – 12:00</div>
+      <div class="cinfo-sub">Sonntags und an Feiertagen geschlossen.</div>
+    </div>
+    <div class="cinfo r3">
+      <div class="cinfo-num">03</div>
+      <div class="cinfo-icon"><i class="fa-solid fa-phone"></i></div>
+      <div class="cinfo-lbl">Telefon</div>
+      <div class="cinfo-val">+41 79 866 77 99</div>
+      <div class="cinfo-sub">Direkter Draht zu unserem Team — wir freuen uns auf Ihren Anruf.</div>
+    </div>
+    <div class="cinfo r">
+      <div class="cinfo-num">04</div>
+      <div class="cinfo-icon"><i class="fa-solid fa-location-dot"></i></div>
+      <div class="cinfo-lbl">Adresse</div>
+      <div class="cinfo-val">Musterstrasse 12<br>3000 Bern, Schweiz</div>
+      <div class="cinfo-sub">Schweizweit tätig — von Bern bis Zürich, Basel und Genf.</div>
+    </div>
+  </div>
+  <div class="contact-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d86798.39609763858!2d7.378177!3d46.947974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e39af6bf21f05%3A0x7ac82e608aced1b4!2sBern!5e0!3m2!1sde!2sch!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+    <div class="contact-map-ov"></div>
+  </div>
+  <div class="contact-bar r">
+    <p>Von der ersten Idee bis zur finalen Montage begleiten wir Sie bei jedem Schritt Ihres Projekts — schweizweit.</p>
+    <button class="btn btn-w" onclick="sTo('#contact')">Projekt starten</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div><div class="ft-logo"><img src="Logox.png" alt="Metall-X"></div>
+      <p class="ft-tag">Ihr Spezialist für hochwertige Geländer,<br>Sonnenstoren und Senkrechtmarkisen.<br><br>Musterstrasse 12, 3000 Bern<br>info@metall-x.ch · www.metall-x.ch</p>
+    </div>
+    <div class="fc"><p class="fc-t">Leistungen</p>
+      <a onclick="sTo('#services')">Metallbau nach Maß</a>
+      <a onclick="sTo('#services')">Geländer</a>
+      <a onclick="sTo('#services')">Balkongeländer</a>
+      <a onclick="sTo('#services')">Markisen</a>
+      <a onclick="sTo('#services')">Fassadendesign</a>
+    </div>
+    <div class="fc"><p class="fc-t">Unternehmen</p>
+      <a onclick="sTo('#about')">Über uns</a>
+      <a onclick="sTo('#process')">Prozess</a>
+      <a onclick="showPage('projekte')">Projekte</a>
+      <a onclick="sTo('#contact')">Kontakt</a>
+    </div>
+    <div class="fc"><p class="fc-t">Rechtliches</p>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+  <div class="ftb">
+    <p>© 2025 Metall-X. Alle Rechte vorbehalten.</p>
+    <div class="soc">
+      <a href="https://linkedin.com" target="_blank" class="so"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="https://facebook.com" target="_blank" class="so"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://instagram.com" target="_blank" class="so"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </div>
+</footer>
+</div><!-- /page-home -->
+
+<!-- ══════════ PROJEKTE PAGE ══════════ -->
+<div class="page" id="page-projekte">
+  <div class="proj-hero">
+    <div class="proj-hero-bg"></div>
+    <div class="proj-hero-grad"></div>
+    <div class="proj-hero-c">
+      <p class="lbl">Unsere Arbeiten</p>
+      <h1 class="h2" style="font-size:clamp(2.4rem,5vw,4.2rem)">Realisierte <b>Projekte</b></h1>
+    </div>
+  </div>
+  <div class="proj-empty">
+    <div class="pe-deco" aria-hidden="true">
+      <div class="pe-bar" style="--h:55%;--d:0s"></div>
+      <div class="pe-bar" style="--h:35%;--d:.1s"></div>
+      <div class="pe-bar" style="--h:70%;--d:.2s"></div>
+      <div class="pe-bar" style="--h:45%;--d:.3s"></div>
+      <div class="pe-bar" style="--h:80%;--d:.4s"></div>
+      <div class="pe-bar" style="--h:30%;--d:.5s"></div>
+      <div class="pe-bar" style="--h:60%;--d:.6s"></div>
+    </div>
+    <div class="pe-content r">
+      <p class="lbl">Unsere Arbeiten</p>
+      <h2 class="h2">Projekte folgen <b>bald</b></h2>
+      <p>Wir dokumentieren unsere abgeschlossenen Projekte und werden diese hier in Kürze präsentieren. Schauen Sie bald wieder vorbei.</p>
+      <button class="btn btn-o" onclick="showPage('home');sTo('#contact')">Projekt anfragen</button>
+    </div>
+  </div>
+  <footer>
+    <div class="ft">
+      <div><div class="ft-logo"><img src="Logox.png" alt="Metall-X"></div>
+        <p class="ft-tag">Ihr Spezialist für hochwertige Geländer,<br>Sonnenstoren und Senkrechtmarkisen.<br><br>Musterstrasse 12, 3000 Bern<br>info@metall-x.ch</p>
+      </div>
+      <div class="fc"><p class="fc-t">Leistungen</p>
+        <a onclick="showPage('home');sTo('#services')">Metallbau nach Maß</a>
+        <a onclick="showPage('home');sTo('#services')">Geländer</a>
+        <a onclick="showPage('home');sTo('#services')">Balkongeländer</a>
+        <a onclick="showPage('home');sTo('#services')">Markisen</a>
+      </div>
+      <div class="fc"><p class="fc-t">Unternehmen</p>
+        <a onclick="showPage('home');sTo('#about')">Über uns</a>
+        <a onclick="showPage('projekte')">Projekte</a>
+        <a onclick="showPage('home');sTo('#contact')">Kontakt</a>
+      </div>
+      <div class="fc"><p class="fc-t">Rechtliches</p>
+        <a href="#">Impressum</a><a href="#">Datenschutz</a>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="ftb">
+      <p>© 2025 Metall-X. Alle Rechte vorbehalten.</p>
+      <div class="soc">
+        <a href="https://linkedin.com" target="_blank" class="so"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://instagram.com" target="_blank" class="so"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+</div><!-- /page-projekte -->
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  document.querySelectorAll('.nl a').forEach(a=>a.classList.remove('active'));
+  if(id==='projekte')document.getElementById('nav-proj').classList.add('active');
+  reObs();
+}
+function sTo(sel){
+  setTimeout(()=>{const el=document.querySelector(sel);if(el)el.scrollIntoView({behavior:'smooth'});},60);
+}
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('s',scrollY>50));
+function tNav(){document.getElementById('hbg').classList.toggle('o');document.getElementById('mob').classList.toggle('o')}
+function cNav(){document.getElementById('hbg').classList.remove('o');document.getElementById('mob').classList.remove('o')}
+let cur=0;
+const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dot');
+function goSlide(n){slides[cur].classList.remove('a');dots[cur].classList.remove('a');cur=n;slides[cur].classList.add('a');dots[cur].classList.add('a')}
+setInterval(()=>goSlide((cur+1)%slides.length),5000);
+let obs;
+function reObs(){
+  if(obs)obs.disconnect();
+  obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('on')})},{threshold:.08});
+  document.querySelectorAll('.r,.r2,.r3').forEach(el=>obs.observe(el));
+}
+reObs();
+function fProj(cat,btn){
+  document.querySelectorAll('.pf').forEach(b=>b.classList.remove('a'));
+  btn.classList.add('a');
+  document.querySelectorAll('.pj').forEach(p=>{p.style.display=(cat==='all'||p.dataset.cat===cat)?'block':'none'});
+}
+(function(){
+  function animCount(el,target,duration){
+    let start=0,step=Math.ceil(target/(duration/16));
+    const t=setInterval(()=>{start+=step;if(start>=target){start=target;clearInterval(t);}el.textContent=start+'+';},16);
+  }
+  const targets=[document.getElementById('designCount'),document.getElementById('ctaCount')];
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){animCount(e.target,50,1400);obs.unobserve(e.target);}});
+  },{threshold:0.4});
+  targets.forEach(el=>{if(el)obs.observe(el);});
+})();
+</script>
+</body>
+</html>
